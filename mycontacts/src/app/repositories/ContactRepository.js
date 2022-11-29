@@ -34,6 +34,24 @@ class ContactRepository {
 			contacts.find(item => item.id === id)
 		));
 	}
+
+	findByEmail(email) {
+		return new Promise((resolve) => resolve(
+			contacts.find(item => item.email === email)
+		));
+	}
+
+	create(contact) {
+		return new Promise((resolve) => {
+			contacts.push(
+				{
+					id: v4(),
+					...contact
+				}
+			);
+			resolve();
+		});
+	}
 }
 
 module.exports = new ContactRepository();
