@@ -3,7 +3,8 @@ const ContactRepository = require("../repositories/ContactRepository");
 class ContactController {
 	async index(req, res) {
 		//listar tudo
-		const contacts = await ContactRepository.findAll();
+		const { orderBy } = req.query;
+		const contacts = await ContactRepository.findAll(orderBy);
 
 		res.json(contacts);
 	}
@@ -24,7 +25,7 @@ class ContactController {
 	async store(req, res) {
 		const { name, email, phone, category_id } = req.body;
 
-		if(!name || !email){
+		if (!name || !email) {
 			return res.status(400).json({ error: "Name and email are required" });
 		}
 
@@ -53,7 +54,7 @@ class ContactController {
 			return res.status(404).json({ error: "Contact not found" });
 		}
 
-		if(!name || !email){
+		if (!name || !email) {
 			return res.status(400).json({ error: "Name and email are required" });
 		}
 
