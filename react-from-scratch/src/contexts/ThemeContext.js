@@ -21,7 +21,7 @@ export class ThemeProvider extends Component {
 
     //similar ao useEffect para monitorar a mudança de um estado
     componentDidMount(prevProps, prevState) {
-        if (prevState.theme !== this.state.theme) {
+        if (prevState?.theme !== this.state.theme) {
             console.log('tema mudou');
         }
     }
