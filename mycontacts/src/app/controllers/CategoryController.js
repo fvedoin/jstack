@@ -20,7 +20,7 @@ class CategoryController {
 			{ name }
 		);
 
-		res.json(category);
+		res.status(201).json(category);
 	}
 }
 

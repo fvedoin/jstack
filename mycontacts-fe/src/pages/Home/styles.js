@@ -66,6 +66,11 @@ export const ListContainer = styled.div`
                 font-weight: bold;
                 color: ${({ theme }) => theme.colors.primary.main};
             }
+
+            img {
+                transform: ${({ orderBy }) => (orderBy === 'asc' ? 'rotate(180deg)' : 'rotate(0deg)')};
+                transition: transform 0.2s ease-in;
+            }
         }
     }
 `;

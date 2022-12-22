@@ -1,0 +1,6 @@
+-> TIPOS DE REQUISIÇÃO
+*Origem = protocolo://dominio:porta
+*SOP: Same Origin Policy: Política de mesma origem - Só existe dentro de navegadores
+*CORS: Cross-Origin Resource Sharing: Compartilhamento de recursos entre origens diferentes. Se a origem for diferente do destino, troca automaticamente para o tipo CORS
+*A request do método "OPTIONS" é a request de preflight (pré vôo). Ela verifica se a origem e os métodos e os cabeçalhos estão disponíveis antes de enviar a request efetivamente.
+*Para definir um cache na requisição de preflight, basta retornar o header Access-Control-Allow-Max-Age e definir o valor em segundos
