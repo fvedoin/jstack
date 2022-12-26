@@ -10,6 +10,7 @@ import {
   Header,
   InputSearchContainer,
   ListContainer,
+  SearchNotFoundContainer,
 } from './styles';
 import Button from '../../components/Button';
 
@@ -18,6 +19,7 @@ import editIcon from '../../assets/images/icons/edit.svg';
 import trashIcon from '../../assets/images/icons/trash.svg';
 import sadIcon from '../../assets/images/icons/sad.svg';
 import emptyBoxIcon from '../../assets/images/icons/empty-box.svg';
+import magnifierQuestionIcon from '../../assets/images/icons/magnifier-question.svg';
 
 import Loader from '../../components/Loader';
 import ContactsService from '../../services/ContactsService';
@@ -134,6 +136,21 @@ export default function Home() {
             </header>
             )}
 
+            {(contacts.length > 0 && filteredContacts.length < 1) && (
+            <SearchNotFoundContainer>
+              <img src={magnifierQuestionIcon} alt="Magnifier question" />
+              <span>
+                Nenhum resultado foi encontrado para
+                {' '}
+                <strong>
+                  ”
+                  {searchTerm}
+                  ”
+                </strong>
+                .
+              </span>
+            </SearchNotFoundContainer>
+            )}
             {filteredContacts.map((contact) => (
               <Card key={contact.id}>
                 <main>
