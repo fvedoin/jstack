@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
+import {
+  useEffect, useMemo, useState, useCallback,
+} from 'react';
 import {
   Card,
   Container,
+  EmptyListContainer,
   ErrorContainer,
   Header,
   InputSearchContainer,
@@ -14,6 +17,7 @@ import arrowIcon from '../../assets/images/icons/arrow.svg';
 import editIcon from '../../assets/images/icons/edit.svg';
 import trashIcon from '../../assets/images/icons/trash.svg';
 import sadIcon from '../../assets/images/icons/sad.svg';
+import emptyBoxIcon from '../../assets/images/icons/empty-box.svg';
 
 import Loader from '../../components/Loader';
 import ContactsService from '../../services/ContactsService';
@@ -29,7 +33,7 @@ export default function Home() {
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [searchTerm, contacts]);
 
-  async function loadContacts() {
+  const loadContacts = useCallback(async () => {
     try {
       setIsLoading(true);
 
@@ -42,11 +46,11 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [orderBy]);
 
   useEffect(() => {
     loadContacts();
-  }, [orderBy]);
+  }, [loadContacts]);
 
   function handleToggleOrderBy() {
     setOrderBy((prevState) => (prevState === 'asc' ? 'desc' : 'asc'));
@@ -63,16 +67,27 @@ export default function Home() {
   return (
     <Container>
       <Loader isLoading={isLoading} />
-      <InputSearchContainer>
-        <input
-          value={searchTerm}
-          type="text"
-          placeholder="Pesquisar contato..."
-          onChange={handleChangeSearchTerm}
-        />
-      </InputSearchContainer>
-      <Header hasError={hasError}>
-        {!hasError && (
+      {contacts.length > 0 && (
+        <InputSearchContainer>
+          <input
+            value={searchTerm}
+            type="text"
+            placeholder="Pesquisar contato..."
+            onChange={handleChangeSearchTerm}
+          />
+        </InputSearchContainer>
+      )}
+      <Header
+        justifyContent={
+            // eslint-disable-next-line no-nested-ternary
+            hasError
+              ? 'flex-end'
+              : (contacts.length > 0
+                ? 'space-between'
+                : 'center')
+        }
+      >
+        {(!hasError && contacts.length > 0) && (
           <strong>
             {filteredContacts.length}
             {' '}
@@ -95,7 +110,21 @@ export default function Home() {
       )}
 
       {!hasError && (
-        <ListContainer orderBy={orderBy}>
+        <>
+          {(contacts.length < 1 && !isLoading) && (
+            <EmptyListContainer>
+              <img src={emptyBoxIcon} alt="Empty box" />
+              <p>
+                Você ainda não tem nenhum contato cadastrado!
+                Clique no botão
+                {' '}
+                <strong>”Novo contato”</strong>
+                {' '}
+                à cima para cadastrar o seu primeiro!
+              </p>
+            </EmptyListContainer>
+          )}
+          <ListContainer orderBy={orderBy}>
             {filteredContacts.length > 0 && (
             <header>
               <button type="button" onClick={handleToggleOrderBy}>
@@ -127,7 +156,8 @@ export default function Home() {
                 </aside>
               </Card>
             ))}
-        </ListContainer>
+          </ListContainer>
+        </>
       )}
     </Container>
   );
