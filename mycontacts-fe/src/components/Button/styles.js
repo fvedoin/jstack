@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export default styled.button`
+export const StyledButton = styled.button`
     height: 52px;
     border: none;
     padding: 0 16px;
@@ -10,6 +10,9 @@ export default styled.button`
     font-weight: bold;
     color: #fff;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     transition: background 0.2s ease-in;
 
