@@ -9,7 +9,7 @@ export default function ToastContainer() {
   useEffect(() => {
     function handleAddToast({ type, text, duration }) {
       setMessages((prevState) => [...prevState, {
-        id: Math.random(),
+        id: Math.random().toString(),
         type,
         text,
         duration,

@@ -38,7 +38,7 @@ class ContactRepository {
 	}
 
 	async update(id, contact) {
-		const [row] = await db.query(`
+		const row = await db.query(`
 			UPDATE contacts
 			SET name = $1, email = $2, phone = $3, category_id = $4
 			WHERE id = $5
