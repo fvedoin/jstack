@@ -1,0 +1,14 @@
+body > div {
+    background: purple;
+}
+div:first-child {
+    display: none;
+    background: yellow;
+}
+#id3 {
+    color: blue;
+    background: black;
+}
+.classe {
+    background: red;
+}
