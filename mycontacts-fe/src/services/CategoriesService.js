@@ -1,3 +1,4 @@
+import CategoryMapper from './mappers/CategoryMapper';
 import HttpClient from './utils/HttpClient';
 
 class CategoriesService {
@@ -5,8 +6,10 @@ class CategoriesService {
     this.httpClient = new HttpClient('http://localhost:3333');
   }
 
-  listCategories(orderBy = 'asc') {
-    return this.httpClient.get(`/categories?orderBy=${orderBy}`);
+  async listCategories(orderBy = 'asc') {
+    const categories = await this.httpClient.get(`/categories?orderBy=${orderBy}`);
+
+    return categories.map(CategoryMapper.toDomain);
   }
 }
 
